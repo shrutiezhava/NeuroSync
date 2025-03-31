@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroDiverse - Support for Neurodivergent People</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Accessibility Controls -->
+    <div class="theme-toggle">
+        <button class="theme-btn" id="lightMode" aria-label="Light mode" onclick="setTheme('light')">☀️</button>
+        <button class="theme-btn" id="darkMode" aria-label="Dark mode" onclick="setTheme('dark')">🌙</button>
+        <button class="theme-btn" id="colorBlindMode" aria-label="Color blind friendly mode">👁️</button>
+    </div>
+    
+    <div class="font-toggle">
+        <button class="font-btn" id="fontIncrease" aria-label="Increase font size" onclick="changeFontSize('increase')">A+</button>
+        <button class="font-btn" id="fontDecrease" aria-label="Decrease font size" onclick="changeFontSize('decrease')">A-</button>
+        <button class="font-btn" id="dyslexicFont" aria-label="Dyslexic friendly font" onclick="toggleDyslexicFont()">Aa</button>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-10.5c0 .83-.67 1.5-1.5 1.5S8 10.33 8 9.5 8.67 8 9.5 8s1.5.67 1.5 1.5zm5 0c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5S13.67 8 14.5 8s1.5.67 1.5 1.5zM12 12c-2.33 0-4.31 1.46-5.11 3.5h10.22c-.8-2.04-2.78-3.5-5.11-3.5z" />
+            </svg>
+            NeuroDiverse
+        </div>
+        <p>Resources and support for the neurodivergent community</p>
+        
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" id="homeLink">Home</a></li>
+                <li><a href="#resources" id="resourcesLink">Resources</a></li>
+                <li><a href="#community" id="communityLink">Community</a></li>
+                <li><a href="#support" id="supportLink">Support</a></li>
+                <li><a href="#about" id="aboutLink">About Us</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-waves"></div>
+        
+        <button onclick="window.location.href='auth.html'" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">
+            Get Started
+        </button>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <section class="hero">
+            <h1>Embracing Neurodiversity</h1>
+            <p class="subtitle">We provide resources, community, and support for neurodivergent individuals and their families. Our mission is to create an inclusive world that celebrates different ways of thinking.</p>
+            <div>
+                <a href="#resources" class="focus-btn">Explore Resources</a>
+                <a href="#community" class="focus-btn">Join Community</a>
+            </div>
+        </section>
+        
+        <section id="resources" class="cards-container">
+            <div class="feature-card">
+                <div class="card-icon">
+                    <span class="feature-icon">🔧</span>
+                </div>
+                <div class="card-content">
+                    <h2>Sensory Tools</h2>
+                    <p>Discover tools and techniques to help manage sensory sensitivities and create comfortable environments.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="card-icon">
+                    <span class="feature-icon">📚</span>
+                </div>
+                <div class="card-content">
+                    <h2>Learning Strategies</h2>
+                    <p>Personalized approaches to education and learning that work with your unique cognitive style.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="card-icon">
+                    <span class="feature-icon">👥</span>
+                </div>
+                <div class="card-content">
+                    <h2>Social Connection</h2>
+                    <p>Build meaningful relationships and develop social skills in a supportive environment.</p>
+                </div>
+            </div>
+
+            <!-- New Feature Cards -->
+            <div class="feature-card" onclick="handleFeature('organization')">
+                <div class="card-icon">
+                    <span class="feature-icon">📋</span>
+                </div>
+                <div class="card-content">
+                    <h2>Organization</h2>
+                    <p>Track tasks and stay organized with our intuitive tools.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" onclick="handleFeature('timeManagement')">
+                <div class="card-icon">
+                    <span class="feature-icon">⏰</span>
+                </div>
+                <div class="card-content">
+                    <h2>Time Management</h2>
+                    <p>Manage your time effectively with customizable schedules.</p>
+                </div>
+            </div>
+
+            <div class="feature-card" onclick="handleFeature('leaderboard')">
+                <div class="card-icon">
+                    <span class="feature-icon">🏆</span>
+                </div>
+                <div class="card-content">
+                    <h2>Leaderboard</h2>
+                    <p>Track progress and celebrate achievements with the community.</p>
+                </div>
+            </div>
+
+            <!-- Chatbot Card -->
+            <div class="feature-card" onclick="handleFeature('chatbot')">
+                <div class="card-icon">
+                    <span class="feature-icon">🤖</span>
+                </div>
+                <div class="card-content">
+                    <h2>AI Assistant</h2>
+                    <p>Get instant support and answers from our friendly AI chatbot, available 24/7.</p>
+                </div>
+            </div>
+
+            <!-- Chatroom Card -->
+            <div class="feature-card" onclick="handleFeature('chatroom')">
+                <div class="card-icon">
+                    <span class="feature-icon">💭</span>
+                </div>
+                <div class="card-content">
+                    <h2>Community Chat</h2>
+                    <p>Connect with others in our moderated chat rooms and build meaningful relationships.</p>
+                </div>
+            </div>
+
+            <!-- Audio Tools Card -->
+            <div class="feature-card" onclick="handleFeature('audioTools')">
+                <div class="card-icon">
+                    <span class="feature-icon">🎵</span>
+                </div>
+                <div class="card-content">
+                    <h2>Focus Sounds</h2>
+                    <p>Enhance concentration with brown noise, pink noise, and other calming audio tools.</p>
+                    <div class="audio-controls hidden">
+                        <button class="audio-btn" data-sound="brown">Brown Noise</button>
+                        <button class="audio-btn" data-sound="pink">Pink Noise</button>
+                        <button class="audio-btn" data-sound="white">White Noise</button>
+                        <button class="audio-btn" data-sound="rain">Rain Sounds</button>
+                        <div class="volume-control">
+                            <input type="range" min="0" max="100" value="50" class="volume-slider">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="community" class="testimonials">
+            <h2>Community Voices</h2>
+            <div class="testimonial-container">
+                <div class="testimonial active">
+                    <p class="testimonial-quote">"Finding this community changed my life. For the first time, I feel understood and accepted for who I am. The resources helped me understand my ADHD and develop strategies that actually work for my brain."</p>
+                    <p class="testimonial-author">- Sonia, ADHD</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-quote">"As an autistic adult, I struggled for years without proper support. This platform connected me with mentors who understand my experience and helped me advocate for accommodations at work."</p>
+                    <p class="testimonial-author">- Jordan, Autism</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-quote">"The sensory tools and techniques I learned here have made such a difference for my daily comfort. I'm so grateful to have resources that recognize and address my sensory processing differences."</p>
+                    <p class="testimonial-author">- Sam, Sensory Processing</p>
+                </div>
+            </div>
+            
+            <div class="dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+        </section>
+        
+        <section id="newsletter" class="newsletter">
+            <h2>Stay Connected</h2>
+            <p>Join our newsletter to receive resources, community updates, and support tailored to neurodivergent needs.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" aria-label="Email address">
+                <button type="submit" class="focus-btn">Subscribe</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-waves"></div>
+        <p>&copy; 2025 NeuroDiverse. All rights reserved.</p>
+        <p>Created with accessibility at the core.</p>
+        <p>Contact: <a href="mailto:info@neurodiverse.org">info@neurodiverse.org</a></p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

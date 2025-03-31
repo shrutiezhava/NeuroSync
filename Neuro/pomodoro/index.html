@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer</title>
+  <link href="style.css" rel="stylesheet">
+  </head>
+<body>
+  <div class="container">
+    <h1>Pomodoro Timer</h1>
+    
+    <div class="mode-buttons">
+      <button id="pomodoro-btn" class="mode-btn active">Pomodoro</button>
+      <button id="break-btn" class="mode-btn">Short Break</button>
+      <button id="long-break-btn" class="mode-btn">Long Break</button>
+    </div>
+    
+    <div class="timer-display">
+      <span id="minutes">25</span>:<span id="seconds">00</span>
+      <div class="timer-circle"></div>
+      <div class="timer-progress">
+        <svg class="timer-circle-svg">
+          <circle class="timer-circle-path" cx="120" cy="120" r="117"></circle>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="current-task" id="current-task">
+      Focus on your task, you got this! &#10084;
+    </div>
+    
+    <div class="session-count" id="session-count">
+      <div class="session-dot"></div>
+      <div class="session-dot"></div>
+      <div class="session-dot"></div>
+      <div class="session-dot"></div>
+    </div>
+    
+    <div class="control-buttons">
+      <button id="reset-btn" class="control-btn">↺</button>
+      <button id="start-btn" class="control-btn">▶</button>
+    </div>
+    
+    <div class="task-section">
+      <div class="task-input">
+        <input type="text" id="task-input" placeholder="What are you working on?">
+        <button id="add-task-btn">Set</button>
+      </div>
+    </div>
+    
+    <div class="settings-section">
+      <h3 class="settings-title">Timer Settings (minutes)</h3>
+      <div class="settings-row">
+        <label for="pomodoro-time">Pomodoro</label>
+        <input type="number" id="pomodoro-time" min="1" max="60" value="25">
+      </div>
+      <div class="settings-row">
+        <label for="short-break-time">Short Break</label>
+        <input type="number" id="short-break-time" min="1" max="30" value="5">
+      </div>
+      <div class="settings-row">
+        <label for="long-break-time">Long Break</label>
+        <input type="number" id="long-break-time" min="1" max="60" value="15">
+      </div>
+      <div class="settings-row">
+        <label for="sessions-until-long-break">Sessions until Long Break</label>
+        <input type="number" id="sessions-until-long-break" min="1" max="10" value="4">
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
