@@ -25,17 +25,25 @@ function sendMessage() {
 
 // 🎤 Google Assistant-Style Voice Recognition
 function startVoiceRecognition() {
-    let recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert("Your browser does not support Speech Recognition.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
     recognition.lang = "en-IN";
     recognition.start();
 
     recognition.onresult = function(event) {
-        let transcript = event.results[0][0].transcript;
+        const transcript = event.results[0][0].transcript;
         document.getElementById("user-input").value = transcript;
         sendMessage();
     };
 
     recognition.onerror = function(event) {
-        console.log("Voice recognition error:", event.error);
+        console.error("Voice recognition error:", event.error);
+        alert("Voice recognition error: " + event.error);
     };
 }
