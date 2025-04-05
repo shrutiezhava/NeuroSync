@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodFlow Tracker</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --bg-light: #f5f7ff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .tracker-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .mood-input {
+            margin-bottom: 30px;
+        }
+
+        .mood-input h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        .mood-selection {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mood-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            background-color: var(--white);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mood-btn:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .mood-btn.selected {
+            border-color: var(--primary);
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+
+        .mood-btn .emoji {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .mood-btn .label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .factors {
+            margin-bottom: 20px;
+        }
+
+        .factors h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-label {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px;
+            background-color: var(--gray-100);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+
+        .checkbox-label:hover {
+            background-color: var(--gray-200);
+        }
+
+        .checkbox-label input {
+            display: none;
+        }
+
+        .checkbox-label.selected {
+            background-color: var(--primary-light);
+            color: var(--white);
+        }
+
+        .notes {
+            margin-bottom: 20px;
+        }
+
+        .notes h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .notes textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            height: 100px;
+            resize: vertical;
+            font-size: 14px;
+        }
+
+        .notes textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn:disabled {
+            background-color: var(--gray-300);
+            cursor: not-allowed;
+        }
+
+        .history {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+        }
+
+        .history h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        .history-list {
+            list-style: none;
+        }
+
+        .history-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-date {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .history-mood {
+            font-size: 20px;
+        }
+
+        .history-factors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .history-factor {
+            font-size: 12px;
+            padding: 3px 8px;
+            background-color: var(--gray-100);
+            border-radius: 12px;
+            color: var(--text-light);
+        }
+
+        .history-notes {
+            font-size: 14px;
+            color: var(--text-dark);
+            padding: 10px 0;
+        }
+
+        .history-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .history-control-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .history-control-btn:hover {
+            color: var(--primary);
+        }
+
+        .chart-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 600px) {
+            .mood-selection {
+                flex-wrap: wrap;
+            }
+            .mood-btn {
+                flex-basis: 30%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MoodFlow Tracker</h1>
+            <p>Track your moods and discover patterns in your emotional well-being</p>
+        </div>
+        
+        <div class="tracker-container">
+            <div class="mood-input">
+                <h2>How are you feeling today?</h2>
+                <div class="mood-selection">
+                    <button class="mood-btn" data-value="5">
+                        <span class="emoji">🥰</span>
+                        <span class="label">Great</span>
+                    </button>
+                    <button class="mood-btn" data-value="4">
+                        <span class="emoji">😊</span>
+                        <span class="label">Good</span>
+                    </button>
+                    <button class="mood-btn" data-value="3">
+                        <span class="emoji">😌</span>
+                        <span class="label">Okay</span>
+                    </button>
+                    <button class="mood-btn" data-value="2">
+                        <span class="emoji">🥺</span>
+                        <span class="label">Poor</span>
+                    </button>
+                    <button class="mood-btn" data-value="1">
+                        <span class="emoji">😿</span>
+                        <span class="label">Terrible</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="factors">
+                <h3>What factors are affecting your mood?</h3>
+                <div class="checkboxes">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="factors" value="Sleep">
+                        Sleep
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="factors" value="Exercise">
+                        Exercise
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="factors" value="Diet">
+                        Diet
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="factors" value="Social">
+                        Social Interaction
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="factors" value="Work">
+                        Work/Study
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="factors" value="Health">
+                        Health
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="factors" value="Weather">
+                        Weather
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="factors" value="Stress">
+                        Stress
+                    </label>
+                </div>
+            </div>
+            
+            <div class="notes">
+                <h3>Notes (optional)</h3>
+                <textarea id="mood-notes" placeholder="Add any additional thoughts or reflections..."></textarea>
+            </div>
+            
+            <button id="save-mood" class="btn" disabled>Save Entry</button>
+        </div>
+        
+        <div class="history">
+            <h2>Your Mood History</h2>
+            <div id="mood-history" class="history-list">
+                <!-- History items will be added here -->
+                <div class="no-data">No mood entries yet. Start tracking your mood above!</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="mood-chart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const moodButtons = document.querySelectorAll('.mood-btn');
+            const factorCheckboxes = document.querySelectorAll('.checkbox-label input');
+            const moodNotesTextarea = document.getElementById('mood-notes');
+            const saveMoodButton = document.getElementById('save-mood');
+            const moodHistoryContainer = document.getElementById('mood-history');
+            const moodChartCanvas = document.getElementById('mood-chart');
+            
+            // Initialize variables
+            let selectedMood = null;
+            let moodHistory = JSON.parse(localStorage.getItem('moodHistory')) || [];
+            
+            // Mood emoji mapping
+            const moodEmojis = {
+                '1': '😿',
+                '2': '🥺',
+                '3': '😌',
+                '4': '😊',
+                '5': '🥰'
+            };
+            
+            // Setup event listeners
+            moodButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    selectedMood = this.dataset.value;
+                    moodButtons.forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    updateSaveButtonState();
+                });
+            });
+            
+            factorCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const label = this.parentElement;
+                    if (this.checked) {
+                        label.classList.add('selected');
+                    } else {
+                        label.classList.remove('selected');
+                    }
+                });
+            });
+            
+            saveMoodButton.addEventListener('click', saveMoodEntry);
+            
+            // Helper functions
+            function updateSaveButtonState() {
+                saveMoodButton.disabled = !selectedMood;
+            }
+            
+            function saveMoodEntry() {
+                // Get selected factors
+                const selectedFactors = Array.from(factorCheckboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value);
+                
+                // Create mood entry object
+                const moodEntry = {
+                    id: Date.now(),
+                    date: new Date().toISOString(),
+                    mood: selectedMood,
+                    factors: selectedFactors,
+                    notes: moodNotesTextarea.value.trim()
+                };
+                
+                // Add to history
+                moodHistory.unshift(moodEntry);
+                
+                // Save to localStorage
+                localStorage.setItem('moodHistory', JSON.stringify(moodHistory));
+                
+                // Reset form
+                resetForm();
+                
+                // Update UI
+                renderMoodHistory();
+                renderMoodChart();
+            }
+            
+            function resetForm() {
+                selectedMood = null;
+                moodButtons.forEach(btn => btn.classList.remove('selected'));
+                factorCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.parentElement.classList.remove('selected');
+                });
+                moodNotesTextarea.value = '';
+                updateSaveButtonState();
+            }
+            
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+            }
+            
+            function renderMoodHistory() {
+                if (moodHistory.length === 0) {
+                    moodHistoryContainer.innerHTML = '<div class="no-data">No mood entries yet. Start tracking your mood above!</div>';
+                    return;
+                }
+                
+                moodHistoryContainer.innerHTML = '';
+                
+                moodHistory.forEach(entry => {
+                    const entryElement = document.createElement('div');
+                    entryElement.className = 'history-item';
+                    entryElement.id = `entry-${entry.id}`;
+                    
+                    const factorsHtml = entry.factors.map(factor => 
+                        `<span class="history-factor">${factor}</span>`
+                    ).join('');
+                    
+                    entryElement.innerHTML = `
+                        <div class="history-header">
+                            <span class="history-date">${formatDate(entry.date)}</span>
+                            <span class="history-mood">${moodEmojis[entry.mood]}</span>
+                        </div>
+                        <div class="history-factors">${factorsHtml}</div>
+                        ${entry.notes ? `<div class="history-notes">${entry.notes}</div>` : ''}
+                        <div class="history-controls">
+                            <button class="history-control-btn delete-btn" data-id="${entry.id}">Delete</button>
+                        </div>
+                    `;
+                    
+                    moodHistoryContainer.appendChild(entryElement);
+                });
+                
+                // Add delete event listeners
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const entryId = parseInt(this.dataset.id);
+                        deleteMoodEntry(entryId);
+                    });
+                });
+            }
+            
+            function deleteMoodEntry(entryId) {
+                moodHistory = moodHistory.filter(entry => entry.id !== entryId);
+                localStorage.setItem('moodHistory', JSON.stringify(moodHistory));
+                renderMoodHistory();
+                renderMoodChart();
+            }
+            
+            function renderMoodChart() {
+                if (moodHistory.length === 0) return;
+                
+                // Prepare data for chart
+                const lastSevenEntries = [...moodHistory].reverse().slice(0, 7).reverse();
+                const labels = lastSevenEntries.map(entry => {
+                    const date = new Date(entry.date);
+                    return `${date.getMonth() + 1}/${date.getDate()}`;
+                });
+                const data = lastSevenEntries.map(entry => entry.mood);
+                
+                // Create chart
+                const ctx = moodChartCanvas.getContext('2d');
+                
+                // Clear previous chart if exists
+                if (window.moodChart) {
+                    window.moodChart.destroy();
+                }
+                
+                window.moodChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Mood Rating',
+                            data: data,
+                            borderColor: '#6366f1',
+                            backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                            borderWidth: 2,
+                            tension: 0.2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 5,
+                                ticks: {
+                                    stepSize: 1,
+                                    callback: function(value) {
+                                        const labels = ['', 'Terrible', 'Poor', 'Okay', 'Good', 'Great'];
+                                        return labels[value];
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const labels = ['', 'Terrible', 'Poor', 'Okay', 'Good', 'Great'];
+                                        const value = context.parsed.y;
+                                        return labels[value];
+                                    }
+                                }
+                            }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }
+                });
+            }
+            
+            // Initialize the app
+            renderMoodHistory();
+            renderMoodChart();
+        });
+    </script>
+</body>
+</html>

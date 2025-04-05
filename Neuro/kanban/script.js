@@ -5,6 +5,10 @@ const themeToggle = document.getElementById('theme-toggle');
 const modal = document.getElementById('card-modal');
 const closeModal = document.querySelector('.close');
 const saveCardBtn = document.getElementById('save-card');
+const addSubtaskBtn = document.getElementById('add-subtask');
+const subtasksContainer = document.getElementById('subtasks-container');
+const timeEstimateInput = document.getElementById('time-estimate');
+const reminderTypeSelect = document.getElementById('reminder-type');
 
 // State Management
 let currentCardId = null;
@@ -21,6 +25,8 @@ addColumnBtn.addEventListener('click', addNewColumn);
 themeToggle.addEventListener('click', toggleTheme);
 closeModal.addEventListener('click', closeCardModal);
 saveCardBtn.addEventListener('click', saveCardChanges);
+addSubtaskBtn.addEventListener('click', addSubtask);
+timeEstimateInput.addEventListener('input', updateTimeVisualization);
 document.addEventListener('DOMContentLoaded', setupInitialState);
 
 // Delegate events for dynamically created elements
@@ -229,13 +235,24 @@ function createCard(data, columnId) {
     
     const cardTemplate = `
         <div class="card" draggable="true" data-id="${cardId}">
+            ${data.reminderType ? `<div class="reminder-badge"><i class="fas fa-bell"></i> ${data.reminderType}</div>` : ''}
             <div class="card-actions">
                 <button class="edit-card"><i class="fas fa-edit"></i></button>
                 <button class="delete-card"><i class="fas fa-trash"></i></button>
             </div>
             <h3 class="card-title">${data.title}</h3>
             <p class="card-description">${data.description || ''}</p>
+            ${data.subtasks ? `
+                <div class="card-progress">
+                    <div class="progress-bar" style="width: ${calculateProgress(data.subtasks)}%"></div>
+                </div>
+            ` : ''}
             <div class="card-meta">
+                ${data.timeEstimate ? `
+                <div class="time-estimate">
+                    <i class="fas fa-clock"></i>
+                    <span>${formatTime(data.timeEstimate)}</span>
+                </div>` : ''}
                 ${dueDateString ? `
                 <div class="card-due-date">
                     <i class="fas fa-calendar"></i>
@@ -318,7 +335,13 @@ function saveCardChanges() {
         title: titleInput.value.trim(),
         description: descriptionInput.value.trim(),
         priority: prioritySelect.value,
-        dueDate: dueDateInput.value
+        dueDate: dueDateInput.value,
+        timeEstimate: parseInt(timeEstimateInput.value) || 0,
+        reminderType: reminderTypeSelect.value !== 'none' ? reminderTypeSelect.value : null,
+        subtasks: Array.from(subtasksContainer.querySelectorAll('.subtask-item')).map(item => ({
+            text: item.querySelector('input[type="text"]').value,
+            completed: item.querySelector('input[type="checkbox"]').checked
+        }))
     };
     
     // If editing an existing card
@@ -546,4 +569,53 @@ function addSampleData() {
     
     // Update next card ID
     nextCardId = 5;
+}
+
+// New functions for executive function features
+function addSubtask() {
+    const subtaskItem = document.createElement('div');
+    subtaskItem.className = 'subtask-item';
+    subtaskItem.innerHTML = `
+        <input type="checkbox">
+        <input type="text" placeholder="Enter subtask">
+        <button onclick="removeSubtask(this)"><i class="fas fa-times"></i></button>
+    `;
+    subtasksContainer.appendChild(subtaskItem);
+}
+
+function removeSubtask(button) {
+    button.closest('.subtask-item').remove();
+    updateCardProgress();
+}
+
+function updateTimeVisualization() {
+    const minutes = parseInt(timeEstimateInput.value) || 0;
+    const visualization = document.querySelector('.time-visualization');
+    visualization.innerHTML = `<div class="time-block" style="width: ${Math.min(minutes/60 * 100, 100)}%"></div>`;
+}
+
+function updateCardProgress() {
+    const subtasks = document.querySelectorAll('.subtask-item');
+    const completed = Array.from(subtasks).filter(item => item.querySelector('input[type="checkbox"]').checked).length;
+    const total = subtasks.length;
+    const progress = total ? (completed / total * 100) : 0;
+    
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+        progressBar.style.width = `${progress}%`;
+    }
+}
+
+// Helper functions
+function calculateProgress(subtasks) {
+    if (!subtasks || !subtasks.length) return 0;
+    const completed = subtasks.filter(task => task.completed).length;
+    return (completed / subtasks.length) * 100;
+}
+
+function formatTime(minutes) {
+    if (minutes < 60) return `${minutes}m`;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return mins ? `${hours}h ${mins}m` : `${hours}h`;
 }

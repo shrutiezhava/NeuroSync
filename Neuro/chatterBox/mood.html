@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker - Neuro</title>
+    <style>
+        :root {
+            --primary-color: #FF9ECD;
+            --secondary-color: #B5E6D8;
+            --accent-color: #FFE5E5;
+            --background-color: #FFF5F7;
+            --card-background: #ffffff;
+            --text-color: #6B7280;
+            --shadow-color: rgba(255, 158, 205, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 158, 205, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(181, 230, 216, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px var(--shadow-color);
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            color: var(--text-color);
+            font-size: 1.2em;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .mood-card {
+            background: var(--card-background);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .mood-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px var(--shadow-color);
+            border-color: var(--primary-color);
+        }
+
+        .mood-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            opacity: 0.8;
+        }
+
+        .mood-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+
+        .mood-card p {
+            color: var(--text-color);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .mood-card .emoji {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 6px var(--shadow-color));
+        }
+
+        .mood-card .date {
+            color: var(--secondary-color);
+            font-size: 0.95em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mood-card .date::before {
+            content: '🕒';
+            font-size: 1.1em;
+        }
+
+        .add-mood {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: var(--primary-color);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2em;
+            cursor: pointer;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            animation: pulse 2s infinite;
+        }
+
+        .add-mood:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: var(--secondary-color);
+        }
+
+        .mood-stats {
+            background: var(--card-background);
+            border-radius: 25px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            width: 100%;
+            max-width: 800px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .mood-stats h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--accent-color);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            opacity: 0.6;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow-color);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-color);
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .mood-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .add-mood {
+                bottom: 30px;
+                right: 30px;
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        /* Cute animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .emoji {
+            animation: bounce 2s infinite;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 6px;
+            border: 3px solid var(--background-color);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Attention retention features */
+        .mood-card {
+            animation-delay: calc(var(--card-index) * 0.1s);
+        }
+
+        .stat-item {
+            animation: fadeIn 0.6s ease-out;
+            animation-delay: calc(var(--stat-index) * 0.1s);
+        }
+
+        .highlight {
+            position: relative;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .highlight:hover::after {
+            transform: scaleX(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Mood Tracker ✨</h1>
+            <p>Track your daily emotions and see your mood journey 🌈</p>
+        </div>
+
+        <div class="mood-stats">
+            <h2>Your Mood Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-item" style="--stat-index: 1">
+                    <div class="stat-value">😊</div>
+                    <div class="stat-label">Happy Days</div>
+                </div>
+                <div class="stat-item" style="--stat-index: 2">
+                    <div class="stat-value">😌</div>
+                    <div class="stat-label">Calm Days</div>
+                </div>
+                <div class="stat-item" style="--stat-index: 3">
+                    <div class="stat-value">😤</div>
+                    <div class="stat-label">Frustrated Days</div>
+                </div>
+                <div class="stat-item" style="--stat-index: 4">
+                    <div class="stat-value">😴</div>
+                    <div class="stat-label">Tired Days</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mood-grid">
+            <div class="mood-card" style="--card-index: 1">
+                <div class="emoji">😊</div>
+                <h2>Happy</h2>
+                <p>Feeling joyful and energetic today! 🌟</p>
+                <div class="date">Today, 2:30 PM</div>
+            </div>
+
+            <div class="mood-card" style="--card-index: 2">
+                <div class="emoji">😌</div>
+                <h2>Calm</h2>
+                <p>Peaceful and content with the day. 🌸</p>
+                <div class="date">Yesterday, 3:45 PM</div>
+            </div>
+
+            <div class="mood-card" style="--card-index: 3">
+                <div class="emoji">😤</div>
+                <h2>Frustrated</h2>
+                <p>Dealing with some challenges. 💪</p>
+                <div class="date">2 days ago, 1:15 PM</div>
+            </div>
+
+            <div class="mood-card" style="--card-index: 4">
+                <div class="emoji">😴</div>
+                <h2>Tired</h2>
+                <p>Need some rest and relaxation. 🌙</p>
+                <div class="date">3 days ago, 4:20 PM</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="add-mood" onclick="alert('Add new mood feature coming soon! ✨')">+</button>
+
+    <script>
+        // Add subtle hover effect to mood cards
+        document.querySelectorAll('.mood-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add attention retention features
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.mood-card, .stat-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html> 

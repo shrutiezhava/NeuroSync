@@ -78,6 +78,33 @@
                 <label for="card-description">Description</label>
                 <textarea id="card-description"></textarea>
             </div>
+            
+            <!-- New task breakdown section -->
+            <div class="form-group">
+                <label>
+                    Task Breakdown
+                    <button id="add-subtask" type="button"><i class="fas fa-plus"></i></button>
+                </label>
+                <div id="subtasks-container"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="time-estimate">Time Estimate (minutes)</label>
+                <input type="number" id="time-estimate" min="0">
+                <div class="time-visualization"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="reminder-type">Reminder Type</label>
+                <select id="reminder-type">
+                    <option value="none">No Reminder</option>
+                    <option value="time">Time-based</option>
+                    <option value="location">Location-based</option>
+                    <option value="context">Context-based</option>
+                </select>
+            </div>
+            
+            <!-- Existing form groups -->
             <div class="form-group">
                 <label for="card-priority">Priority</label>
                 <select id="card-priority">
