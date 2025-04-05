@@ -5,7 +5,7 @@
 // Configuration
 $config = [
     'temp_dir' => 'temp', // Server-side temporary directory
-    'gemini_api_key' => 'AIzaSyDSaj87x0jJfRHQtk5b4BvZ8DDVmHQ8B6k', // Replace with your actual Gemini API key
+    'gemini_api_key' => '', // Replace with your actual Gemini API key
     'max_summary_length' => 1500, // Maximum length for summary
 ];
 
