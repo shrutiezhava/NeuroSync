@@ -15,9 +15,46 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        /* Theme variables */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --link-color: #007bff;
+            --link-hover-color: #0056b3;
+        }
+
+        [data-theme='dark'] {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --link-color: #4da6ff;
+            --link-hover-color: #80c1ff;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900">
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">🌓</button>
+    
     <header class="fixed w-full bg-white shadow-sm z-50">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-blue-600">NeuroSync</div>
@@ -55,201 +92,7 @@
                 See Success Stories
             </button>
         </div>
-    </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const navLinks = document.querySelectorAll('nav a');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = link.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-                    
-                    if (targetSection) {
-                        targetSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-        });
-    </script>
-
-    <!-- Theme toggle functionality -->
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
         
-        // Check for saved theme preference or system preference
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        // Set initial theme
-        if (savedTheme) {
-            html.setAttribute('data-theme', savedTheme);
-        } else if (systemPrefersDark) {
-            html.setAttribute('data-theme', 'dark');
-        }
-        
-        // Toggle theme
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            // Update icon
-            const icon = themeToggle.querySelector('svg path');
-            if (newTheme === 'dark') {
-                icon.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z');
-            } else {
-                icon.setAttribute('d', 'M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z');
-            }
-        });
-        
-        // Update icon on initial load
-        if (html.getAttribute('data-theme') === 'dark') {
-            const icon = themeToggle.querySelector('svg path');
-            icon.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z');
-        }
-    </script>
-</body>
-</html>
-
-<!---<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroLearn - Learning Made Accessible</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .gradient-text {
-            background: linear-gradient(to right, #3B82F6, #3B82F6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-    </style>
-</head>
-<body class="bg-white text-gray-900">
-    <!-- Previous header and main content remains the same -->
-
-    <!-- Our Mission Section -->
-     <!--
-    <section class="container mx-auto px-4 mt-16 flex flex-col md:flex-row items-center">
-        <div class="w-full md:w-1/2 pr-0 md:pr-12">
-            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full mb-4 inline-block">
-                Our Mission
-            </span>
-            <h2 class="text-4xl font-bold mb-6">
-                Designed With Neurodiversity At The Core
-            </h2>
-            <p class="text-lg text-gray-600 mb-6">
-                We believe that learning environments should adapt to students, not the other way around. Our platform was built from the ground up with neurodiversity as a fundamental design principle, not an afterthought.
-            </p>
-            <p class="text-lg text-gray-600 mb-8">
-                Our team includes educators, technologists, and neurodiversity advocates who are passionate about creating truly inclusive learning experiences that celebrate diverse thinking patterns.
-            </p>
-            <button class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
-                Learn More About Us
-            </button>
-        </div>
-        <div class="w-full md:w-1/2 mt-8 md:mt-0">
-            <div class="bg-blue-50 rounded-lg p-8 h-96 flex items-center justify-center text-center">
-                <span class="text-blue-500">About Image</span>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Previous script remains the same
-    </script>
-</body>
-</html>
---->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroSync - Get in sync with yourself </title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .gradient-text {
-            background: linear-gradient(to right, #3B82F6, #3B82F6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-    </style>
-</head>
-<!--
-<body class="bg-white text-gray-900">
-    <header class="fixed w-full bg-white shadow-sm z-50">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-blue-600">NeuroLearn</div>
-            <div class="space-x-6">
-                <a href="#features" class="text-gray-700 hover:text-blue-600">Features</a>
-                <a href="#testimonials" class="text-gray-700 hover:text-blue-600">Testimonials</a>
-                <a href="#about" class="text-gray-700 hover:text-blue-600">About</a>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">
-                    Get Started
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container mx-auto px-4 pt-24 flex flex-col items-center text-center">
-        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full mb-4">
-            Designed for neurodiverse students
-        </span>
-        
-        <h1 class="text-6xl font-bold mb-6">
-            Learning Made <span class="gradient-text">Accessible</span><br>
-            For Everyone
-        </h1>
-        
-        <p class="text-xl text-gray-600 max-w-2xl mb-8">
-            A digital sanctuary designed specifically for neurodiverse students, providing the 
-            tools and environment to help you learn your way.
-        </p>
-        
-        <div class="space-x-4">
-            <button class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
-                Explore Features →
-            </button>
-            <button class="bg-blue-100 text-blue-800 px-6 py-3 rounded-full hover:bg-blue-200 transition">
-                See Success Stories
-            </button>
-        </div>
-
         <!-- Features Section -->
         <section id="features" class="w-full mt-16">
             <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
@@ -333,12 +176,67 @@
         <div class="w-full md:w-1/2 mt-8 md:mt-0">
             <div class="bg-blue-50 rounded-lg p-8 h-96 flex items-center justify-center text-center">
                 <img src="images/dev.jpg"/>
-                <!--<span class="text-blue-500">About Image</span>-->
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
+    <footer class="mt-16 border-t border-gray-200">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex items-center gap-4 mb-8">
+                <h2 class="text-2xl font-bold text-blue-600">NeuroSync</h2>
+                <div class="space-x-4">
+                    <a href="#" aria-label="Twitter" class="text-gray-700 hover:text-blue-600">𝕏</a>
+                    <a href="#" aria-label="LinkedIn" class="text-gray-700 hover:text-blue-600">in</a>
+                    <a href="#" aria-label="YouTube" class="text-gray-700 hover:text-blue-600">▶</a>
+                    <a href="#" aria-label="Instagram" class="text-gray-700 hover:text-blue-600">●</a>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-semibold mb-4">Platform</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Features</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Testimonials</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Pricing</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">About Us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Careers</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Partners</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Blog</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Research</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Accessibility</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-200 text-center text-gray-600">
+                © 2025 NeuroSync. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
     <script>
+        // Smooth scrolling for navigation links
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelectorAll('nav a');
             
@@ -354,189 +252,8 @@
                 });
             });
         });
-    </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroSync</title>
-    <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #000000;
-            --link-color: #007bff;
-            --link-hover-color: #0056b3;
-        }
-
-        [data-theme='dark'] {
-            --bg-color: #121212;
-            --text-color: #ffffff;
-            --link-color: #4da6ff;
-            --link-hover-color: #80c1ff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        footer {
-            background-color: var(--bg-color);
-            padding: 40px 0;
-            border-top: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 20px;
-        }
-
-        .footer-section h4 {
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section ul li a {
-            color: var(--link-color);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--link-hover-color);
-            text-decoration: underline;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            color: var(--link-color);
-            margin-right: 15px;
-            font-size: 20px;
-            text-decoration: none;
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 24px;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .copyright {
-            margin-top: 20px;
-            text-align: center;
-            border-top: 1px solid rgba(0,0,0,0.1);
-            padding-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">🌓</button>
-    
-    <footer>
-        <div class="container">
-            <div class="logo-section">
-                <h2>NeuroSync</h2>
-                <div class="social-icons">
-                    <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="#" aria-label="LinkedIn">in</a>
-                    <a href="#" aria-label="YouTube">▶</a>
-                    <a href="#" aria-label="Instagram">●</a>
-                </div>
-            </div>
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4>Platform</h4>
-                    <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Testimonials</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Partners</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Research</a></li>
-                        <li><a href="#">Accessibility</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Cookies</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                © 2025 NeuroSync. All rights reserved.
-            </div>
-        </div>
-    </footer>
-
-    <script>
+        
+        // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
 
@@ -557,14 +274,6 @@
             
             htmlElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('neurolearn-theme', newTheme);
-        });
-
-        // Listen for system theme changes
-        systemPrefersDark.addListener((e) => {
-            const savedTheme = localStorage.getItem('neurolearn-theme');
-            if (!savedTheme) {
-                htmlElement.setAttribute('data-theme', e.matches ? 'dark' : '');
-            }
         });
     </script>
 </body>
