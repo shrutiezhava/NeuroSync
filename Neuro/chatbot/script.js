@@ -1,13 +1,11 @@
 function sendMessage() {
-    let userInput = document.getElementById("user-input").value.trim();
+    let userInput = document.getElementById("user-input").value;
     let chatBox = document.getElementById("chat-box");
 
-    if (userInput === "") return;
+    if (userInput.trim() === "") return;
 
-    // Display user message
     chatBox.innerHTML += `<div class="user-message"><b>You:</b> ${userInput}</div>`;
 
-    // Send request to backend
     fetch("chatbot.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -15,14 +13,29 @@ function sendMessage() {
     })
     .then(response => response.json())
     .then(data => {
-        let botResponse = data.response || "I'm sorry, I couldn't understand.";
+        let botResponse = data.response || "I'm here to listen. 💙";
         chatBox.innerHTML += `<div class="bot-message"><b>Bot:</b> ${botResponse}</div>`;
-        chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the latest message
     })
     .catch(error => {
-        chatBox.innerHTML += `<div class="error-message"><b>Error:</b> Unable to reach server.</div>`;
+        chatBox.innerHTML += `<div class="error-message"><b>Error:</b> ${error}</div>`;
     });
 
-    // Clear input field
     document.getElementById("user-input").value = "";
+}
+
+// 🎤 Google Assistant-Style Voice Recognition
+function startVoiceRecognition() {
+    let recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        let transcript = event.results[0][0].transcript;
+        document.getElementById("user-input").value = transcript;
+        sendMessage();
+    };
+
+    recognition.onerror = function(event) {
+        console.log("Voice recognition error:", event.error);
+    };
 }
