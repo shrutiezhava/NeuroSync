@@ -1,6 +1,6 @@
 <?php
 $pythonPort = 5000;
-$connection = @fsockopen("", $pythonPort);
+$connection = @fsockopen("127.0.0.1", $pythonPort);
 
 if (!$connection) {
     // Flask is NOT running, so we start it in background

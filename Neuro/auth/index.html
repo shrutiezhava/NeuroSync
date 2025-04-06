@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroLearn - Sign In or Register</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .auth-container {
+            background: linear-gradient(135deg, #EBF4FF 0%, #F0F7FF 100%);
+        }
+        .form-switch {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <header class="fixed w-full bg-white shadow-sm z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-600">NeuroLearn</a>
+        </nav>
+    </header>
+
+    <main class="min-h-screen pt-20 auth-container">
+        <div class="container mx-auto px-4 py-16">
+            <div class="max-w-md mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+                <!-- Auth Header -->
+                <div class="flex">
+                    <button onclick="switchForm('login')" id="loginTab" class="w-1/2 py-4 text-center font-semibold text-blue-600 border-b-2 border-blue-600">
+                        Sign In
+                    </button>
+                    <button onclick="switchForm('register')" id="registerTab" class="w-1/2 py-4 text-center font-semibold text-gray-500 border-b-2 border-transparent">
+                        Register
+                    </button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm" class="p-8">
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="h-4 w-4 text-blue-600">
+                                <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                            </label>
+                            <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" class="p-8 hidden">
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                            <input type="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div class="flex items-start">
+                            <input type="checkbox" required class="h-4 w-4 mt-1 text-blue-600">
+                            <span class="ml-2 text-sm text-gray-600">
+                                I agree to the <a href="#" class="text-blue-600 hover:text-blue-800">Terms of Service</a> and 
+                                <a href="#" class="text-blue-600 hover:text-blue-800">Privacy Policy</a>
+                            </span>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                            Create Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="mt-8 text-center text-gray-600">
+                <p>Need help? <a href="#" class="text-blue-600 hover:text-blue-800">Contact Support</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchForm(formType) {
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (formType === 'login') {
+                loginTab.classList.add('text-blue-600', 'border-blue-600');
+                loginTab.classList.remove('text-gray-500', 'border-transparent');
+                registerTab.classList.add('text-gray-500', 'border-transparent');
+                registerTab.classList.remove('text-blue-600', 'border-blue-600');
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                registerTab.classList.add('text-blue-600', 'border-blue-600');
+                registerTab.classList.remove('text-gray-500', 'border-transparent');
+                loginTab.classList.add('text-gray-500', 'border-transparent');
+                loginTab.classList.remove('text-blue-600', 'border-blue-600');
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
+        // Form submission handling
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Add your form submission logic here
+                console.log('Form submitted');
+            });
+        });
+    </script>
+</body>
+</html> 

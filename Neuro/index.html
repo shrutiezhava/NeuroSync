@@ -120,7 +120,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.192a3 3 0 01-4.243 0 3 3 0 014.243 0zm12.728 0a3 3 0 01-4.243 0 3 3 0 014.243 0z" />
                         </svg>
                     </div>
-                    <a href="social.html"><h3 class="text-xl font-semibold mb-2">Social Navigation Tool</h3>
+                    <a href="social\index.html"><h3 class="text-xl font-semibold mb-2">Social Navigation Tool</h3>
                     <p class="text-gray-600 text-sm">Practice social interaction using our low-stakes multiple choice questions.</p></a>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
@@ -147,7 +147,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.192a3 3 0 01-4.243 0 3 3 0 014.243 0zm12.728 0a3 3 0 01-4.243 0 3 3 0 014.243 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Learning Styles</h3>
+                    <a href="youtube/index.php"><h3 class="text-xl font-semibold    mb-2">Learning Styles</h3>
                     <p class="text-gray-600 text-sm">Content presentation adapts to your preferred learning style - visual, auditory, or kinesthetic.</p>
                 </div>
             </div>
@@ -252,7 +252,15 @@
                 });
             });
         });
-        
+        const toggleBtn = document.getElementById('themeToggle');
+    toggleBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        document.body.classList.toggle('bg-white', isDark);
+        document.body.classList.toggle('bg-gray-900', !isDark);
+        document.body.classList.toggle('text-gray-900', isDark);
+        document.body.classList.toggle('text-white', !isDark);
+    });
         // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
