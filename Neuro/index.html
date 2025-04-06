@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +31,9 @@
             --text-color: #000000;
             --link-color: #007bff;
             --link-hover-color: #0056b3;
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --footer-border: #e5e7eb;
         }
 
         [data-theme='dark'] {
@@ -38,6 +41,25 @@
             --text-color: #ffffff;
             --link-color: #4da6ff;
             --link-hover-color: #80c1ff;
+            --card-bg: #1e1e1e;
+            --header-bg: #1a1a1a;
+            --footer-border: #2d2d2d;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        header {
+            background-color: var(--header-bg);
+            transition: background-color 0.3s;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            transition: background-color 0.3s;
         }
         
         .theme-toggle {
@@ -50,21 +72,46 @@
             right: 20px;
             z-index: 1000;
         }
+        
+        [data-theme='dark'] .text-gray-600 {
+            color: #c5c5c5;
+        }
+        
+        [data-theme='dark'] .text-gray-700 {
+            color: #d1d1d1;
+        }
+        
+        [data-theme='dark'] .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+        
+        [data-theme='dark'] .bg-white {
+            background-color: var(--card-bg);
+        }
+        
+        [data-theme='dark'] .border-gray-200 {
+            border-color: var(--footer-border);
+        }
+        
+        [data-theme='dark'] .bg-blue-50 {
+            background-color: #172554;
+        }
     </style>
 </head>
-<body class="bg-white text-gray-900">
+<body>
     <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">🌓</button>
     
-    <header class="fixed w-full bg-white shadow-sm z-50">
+    <header class="fixed w-full shadow-sm z-50">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-blue-600">NeuroSync</div>
             <div class="space-x-6">
-                <a href="#features" class="text-gray-700 hover:text-blue-600">Features</a>
-                <a href="#testimonials" class="text-gray-700 hover:text-blue-600">Testimonials</a>
-                <a href="#about" class="text-gray-700 hover:text-blue-600">About</a>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">
+                <a href="#features" class="hover:text-blue-600">Features</a>
+                <a href="#testimonials" class="hover:text-blue-600">Testimonials</a>
+                <a href="#about" class="hover:text-blue-600">About</a>
+                <!-- Auth button that changes based on login status -->
+                <a id="authButton" href="auth/index.html" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">
                     Get Started
-                </button>
+                </a>
             </div>
         </nav>
     </header>
@@ -79,7 +126,7 @@
             For Everyone
         </h1>
         
-        <p class="text-xl text-gray-600 max-w-2xl mb-8">
+        <p class="text-xl max-w-2xl mb-8">
             A digital sanctuary designed specifically for neurodiverse students, providing the 
             tools and environment to help you learn your way.
         </p>
@@ -95,60 +142,60 @@
         
         <!-- Features Section -->
         <section id="features" class="w-full mt-16">
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <div class="card p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
                     <div class="feature-icon" style="background-color: #3B82F6; color: white;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                     </div>
                     <a href="chatbot/index.html"><h3 class="text-xl font-semibold mb-2">AI Chatbot</h3>
-                    <p class="text-gray-600 text-sm">Release your emotional load with Ava, our AI bot.</p></a>
+                    <p class="text-sm">Release your emotional load with Ava, our AI bot.</p></a>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
+                <div class="card p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
                     <div class="feature-icon" style="background-color: #9333EA; color: white;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                     </div>
                     <a href="kanban/index.html"><h3 class="text-xl font-semibold mb-2">Visual Schedules</h3>
-                    <p class="text-gray-600 text-sm">Create clear visual timetables with customizable reminders and kanban boards</p></a>
+                    <p class="text-sm">Create clear visual timetables with customizable reminders and kanban boards</p></a>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
+                <div class="card p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
                     <div class="feature-icon" style="background-color: #6366F1; color: white;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.192a3 3 0 01-4.243 0 3 3 0 014.243 0zm12.728 0a3 3 0 01-4.243 0 3 3 0 014.243 0z" />
                         </svg>
                     </div>
-                    <a href="social\index.html"><h3 class="text-xl font-semibold mb-2">Social Navigation Tool</h3>
-                    <p class="text-gray-600 text-sm">Practice social interaction using our low-stakes multiple choice questions.</p></a>
+                    <a href="social/index.html"><h3 class="text-xl font-semibold mb-2">Social Navigation Tool</h3>
+                    <p class="text-sm">Practice social interaction using our low-stakes multiple choice questions.</p></a>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
+                <div class="card p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
                     <div class="feature-icon" style="background-color: #F59E0B; color: white;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                         </svg>
                     </div>
-                    <a href="chatroom/chatroom.php"><h3 class="text-xl font-semibold mb-2">Chatroom- Chat with likeminded people online!</h3>
-                    <p class="text-gray-600 text-sm">Need to make new friends? Try our chatroom and find new people.</p></a>
+                    <a href="chatroom/index.html"><h3 class="text-xl font-semibold mb-2">Chatroom- Chat with likeminded people online!</h3>
+                    <p class="text-sm">Need to make new friends? Try our chatroom and find new people.</p></a>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
+                <div class="card p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
                     <div class="feature-icon" style="background-color: #EF4444; color: white;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
                     <a href="pomodoro/index.html"><h3 class="text-xl font-semibold mb-2">Time Management</h3>
-                    <p class="text-gray-600 text-sm">Visual timers and break reminders along with pomodoro to help maintain productive work sessions.</p></a>
+                    <p class="text-sm">Visual timers and break reminders along with pomodoro to help maintain productive work sessions.</p></a>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
+                <div class="card p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300">
                     <div class="feature-icon" style="background-color: #10B981; color: white;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.192a3 3 0 01-4.243 0 3 3 0 014.243 0zm12.728 0a3 3 0 01-4.243 0 3 3 0 014.243 0z" />
                         </svg>
                     </div>
-                    <a href="youtube/index.php"><h3 class="text-xl font-semibold    mb-2">Learning Styles</h3>
-                    <p class="text-gray-600 text-sm">Content presentation adapts to your preferred learning style - visual, auditory, or kinesthetic.</p>
+                    <a href="youtube/index.php"><h3 class="text-xl font-semibold mb-2">Learning Styles</h3>
+                    <p class="text-sm">Content presentation adapts to your preferred learning style - visual, auditory, or kinesthetic.</p></a>
                 </div>
             </div>
         </section>
@@ -163,10 +210,10 @@
             <h2 class="text-4xl font-bold mb-6">
                 Designed With Neurodiversity At The Core
             </h2>
-            <p class="text-lg text-gray-600 mb-6">
+            <p class="text-lg mb-6">
                 We believe that learning environments should adapt to students, not the other way around. Our platform was built from the ground up with neurodiversity as a fundamental design principle, not an afterthought.
             </p>
-            <p class="text-lg text-gray-600 mb-8">
+            <p class="text-lg mb-8">
                 Our team includes educators, technologists, and neurodiversity advocates who are passionate about creating truly inclusive learning experiences that celebrate diverse thinking patterns.
             </p>
             <button class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
@@ -175,61 +222,61 @@
         </div>
         <div class="w-full md:w-1/2 mt-8 md:mt-0">
             <div class="bg-blue-50 rounded-lg p-8 h-96 flex items-center justify-center text-center">
-                <img src="images/dev.jpg"/>
+                <img src="images/dev.jpg" alt="Our Mission" class="max-w-full max-h-full rounded-lg object-cover shadow-lg"/>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="mt-16 border-t border-gray-200">
+    <footer class="mt-16 border-t">
         <div class="container mx-auto px-4 py-8">
             <div class="flex items-center gap-4 mb-8">
                 <h2 class="text-2xl font-bold text-blue-600">NeuroSync</h2>
                 <div class="space-x-4">
-                    <a href="#" aria-label="Twitter" class="text-gray-700 hover:text-blue-600">𝕏</a>
-                    <a href="#" aria-label="LinkedIn" class="text-gray-700 hover:text-blue-600">in</a>
-                    <a href="#" aria-label="YouTube" class="text-gray-700 hover:text-blue-600">▶</a>
-                    <a href="#" aria-label="Instagram" class="text-gray-700 hover:text-blue-600">●</a>
+                    <a href="#" aria-label="Twitter" class="hover:text-blue-600">𝕏</a>
+                    <a href="#" aria-label="LinkedIn" class="hover:text-blue-600">in</a>
+                    <a href="#" aria-label="YouTube" class="hover:text-blue-600">▶</a>
+                    <a href="#" aria-label="Instagram" class="hover:text-blue-600">●</a>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <h4 class="font-semibold mb-4">Platform</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Features</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Testimonials</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Pricing</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">FAQ</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Features</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Testimonials</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Pricing</a></li>
+                        <li><a href="#" class="hover:text-blue-600">FAQ</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Company</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">About Us</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Careers</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Partners</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Contact</a></li>
+                        <li><a href="#" class="hover:text-blue-600">About Us</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Careers</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Partners</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Contact</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Resources</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Blog</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Research</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Accessibility</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Support</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Blog</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Research</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Accessibility</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Support</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Legal</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Terms of Service</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600">Cookies</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Cookies</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-200 text-center text-gray-600">
+            <div class="mt-8 pt-8 border-t text-center">
                 © 2025 NeuroSync. All rights reserved.
             </div>
         </div>
@@ -238,7 +285,7 @@
     <script>
         // Smooth scrolling for navigation links
         document.addEventListener('DOMContentLoaded', () => {
-            const navLinks = document.querySelectorAll('nav a');
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
             
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -251,38 +298,113 @@
                     }
                 });
             });
+            
+            // Check if user is logged in
+            checkUserLoginStatus();
         });
-        const toggleBtn = document.getElementById('themeToggle');
-    toggleBtn.addEventListener('click', () => {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        document.body.classList.toggle('bg-white', isDark);
-        document.body.classList.toggle('bg-gray-900', !isDark);
-        document.body.classList.toggle('text-gray-900', isDark);
-        document.body.classList.toggle('text-white', !isDark);
-    });
-        // Theme toggle functionality
+
+        // Global theme functionality
         const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
 
+        // Function to set the theme and save it to localStorage
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('neurosync-theme', theme);
+            
+            // Add event to notify other pages about theme change
+            const event = new Event('themeChanged');
+            document.dispatchEvent(event);
+        }
+
         // Check for saved theme preference or system preference
-        const savedTheme = localStorage.getItem('neurolearn-theme');
+        const savedTheme = localStorage.getItem('neurosync-theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
         // Set initial theme
         if (savedTheme) {
-            htmlElement.setAttribute('data-theme', savedTheme);
+            setTheme(savedTheme);
         } else if (systemPrefersDark) {
-            htmlElement.setAttribute('data-theme', 'dark');
+            setTheme('dark');
+        } else {
+            setTheme('light');
         }
 
+        // Theme toggle click handler
         themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
+            const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            htmlElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('neurolearn-theme', newTheme);
+            setTheme(newTheme);
         });
+
+        // Listen for theme changes from other pages
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'neurosync-theme') {
+                htmlElement.setAttribute('data-theme', e.newValue);
+            }
+        });
+        
+        // Add script to child pages to listen for theme changes
+        const themeScript = `
+            // Check for theme on page load
+            const htmlElement = document.documentElement;
+            const savedTheme = localStorage.getItem('neurosync-theme');
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+            }
+            
+            // Listen for theme changes from localStorage
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'neurosync-theme') {
+                    htmlElement.setAttribute('data-theme', e.newValue);
+                }
+            });
+            
+            // Listen for theme changes from event
+            document.addEventListener('themeChanged', function() {
+                const theme = localStorage.getItem('neurosync-theme');
+                htmlElement.setAttribute('data-theme', theme);
+            });
+        `;
+        
+        // User authentication functions
+        function checkUserLoginStatus() {
+            // Check if user is logged in by looking for user data in localStorage
+            const userData = localStorage.getItem('neurosync-user');
+            const authButton = document.getElementById('authButton');
+            
+            if (userData) {
+                // User is logged in, change button to "Logout"
+                authButton.textContent = 'Logout';
+                authButton.href = '#'; // Set to # as we'll handle logout with JavaScript
+                authButton.addEventListener('click', handleLogout);
+            } else {
+                // User is not logged in, keep as "Get Started" pointing to login page
+                authButton.textContent = 'Get Started';
+                authButton.href = 'auth/index.html';
+                // Remove logout handler if it was previously added
+                authButton.removeEventListener('click', handleLogout);
+            }
+        }
+        
+        function handleLogout(e) {
+            e.preventDefault();
+            
+            // Clear user data from localStorage
+            localStorage.removeItem('neurosync-user');
+            
+            // Update the authentication button
+            const authButton = document.getElementById('authButton');
+            authButton.textContent = 'Get Started';
+            authButton.href = 'auth/index.html';
+            authButton.removeEventListener('click', handleLogout);
+            
+            // Optional: Show a message that user has been logged out
+            alert('You have been logged out successfully.');
+            
+            // Optional: Redirect to home page or refresh
+            // window.location.href = '/';
+        }
     </script>
 </body>
 </html>

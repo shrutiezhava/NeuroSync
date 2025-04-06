@@ -1,0 +1,10 @@
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .auth-container {
+            background: linear-gradient(135deg, #EBF4FF 0%, #F0F7FF 100%);
+        }
+        .form-switch {
+            transition: all 0.3s ease-in-out;
+        }
